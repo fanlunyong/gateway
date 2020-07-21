@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: service01-nacos-hello
+          uri: http://localhost:56621
+          predicates:
+            - Path=/service01/**
+            - Age=20,60
+          filters:
+            - StripPrefix=1
+            - Log=false,true
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 127.0.0.1:8848
+        service: tsl-gateway
+      config:
+        enabled: true
+        server-addr: 127.0.0.1:8848
+  application:
+    name: tsl-api-gateway
+server:
+  port: 9110
